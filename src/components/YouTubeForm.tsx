@@ -6,21 +6,41 @@ type FormValues = {
     username: string;
     email: string;
     channel: string;
+    social: {
+        twitter: string;
+        facebook: string;
+    }
 }
 
 export const YouTubeForm = () => {
-    const form = useForm<FormValues>({
-        defaultValues: async()=>{
-            const res = await fetch('https://jsonplaceholder.typicode.com/users/1');;
-            const data = await res.json();
+    // const form = useForm<FormValues>({
+    //     defaultValues: async()=>{
+    //         const res = await fetch('https://jsonplaceholder.typicode.com/users/1');;
+    //         const data = await res.json();
 
-            return {
-                username: data.username,
-                email: data.email,
-                channel: data.name
+    //         return {
+    //             username: data.username,
+    //             email: data.email,
+    //             channel: data.name
+    //         }
+    //     }
+    // });
+
+    const form = useForm<FormValues>({
+        defaultValues:  {
+                username: "data.username",
+                email: "data@email.com",
+                channel: "data.channel",
+                social: {
+                    twitter: '',
+                    facebook: ''
+                }
             }
-        }
+        
     });
+
+
+
   rendercount++
     // console.log(form)
     const { register, control, handleSubmit, formState } = form;
@@ -73,6 +93,18 @@ export const YouTubeForm = () => {
             }
           })} />
            <p className="error">{errors.channel?.message}</p>
+
+
+           <label htmlFor="twitter">Twitter</label>
+          <input type="text" id="twitter" {...register('social.twitter', {
+            required: {
+                value: true,
+                message: 'Twitter is required.'
+            }
+          })} />
+           <p className="error">{errors.social?.twitter?.message}</p>
+
+
           <button>Submit</button>
         </form>
         <DevTool control={control} />
