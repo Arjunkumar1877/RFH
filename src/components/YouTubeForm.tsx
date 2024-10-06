@@ -9,7 +9,8 @@ type FormValues = {
     social: {
         twitter: string;
         facebook: string;
-    }
+    },
+    phoneNumbers: string[];
 }
 
 export const YouTubeForm = () => {
@@ -34,7 +35,8 @@ export const YouTubeForm = () => {
                 social: {
                     twitter: '',
                     facebook: ''
-                }
+                },
+                phoneNumbers: ["", ""]
             }
         
     });
@@ -103,6 +105,37 @@ export const YouTubeForm = () => {
             }
           })} />
            <p className="error">{errors.social?.twitter?.message}</p>
+
+           <label htmlFor="facebook">Facebook</label>
+          <input type="text" id="facebook" {...register('social.facebook', {
+            required: {
+                value: true,
+                message: 'Facebook is required.'
+            }
+          })} />
+           <p className="error">{errors.social?.facebook?.message}</p>
+
+
+
+
+           <label htmlFor="primary-phone">Primary phone number</label>
+          <input type="text" id="primary-phone" {...register('phoneNumbers.0', {
+            required: {
+                value: true,
+                message: 'Primary phone number is required.'
+            }
+          })} />
+           <p className="error">{errors.phoneNumbers?.message}</p>
+
+           <label htmlFor="secondary-phone">Secondary phone number</label>
+          <input type="text" id="secondary-phone" {...register('phoneNumbers.1', {
+            required: {
+                value: true,
+                message: 'Secondary phone number is required.'
+            }
+          })} />
+           <p className="error">{errors.phoneNumbers?.message}</p>
+
 
 
           <button>Submit</button>
