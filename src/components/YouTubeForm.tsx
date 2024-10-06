@@ -1,22 +1,42 @@
 import { useForm } from "react-hook-form";
-import { DevTool } from '@hookform/devtools'
-export const YouTubeForm = () => {
-    const form = useForm();
+import { DevTool } from '@hookform/devtools';
 
+let rendercount = 0;
+type FormValues = {
+    username: string;
+    email: string;
+    channel: string;
+}
+
+export const YouTubeForm = () => {
+    const form = useForm<FormValues>();
+  rendercount++
     console.log(form)
-    const { register, control } = form;
-     console.log(register)
+    const { register, control, handleSubmit } = form;
+     const onSubmit = (data: FormValues)=>{
+       console.log("form submitted", data)
+     }
 
     return (
       <div>
-        <h1>YouTube Form</h1>
+        <h1>YouTube Form {rendercount/2}</h1>
   
-        <form>
+        <form onSubmit={handleSubmit(onSubmit)} noValidate>
           <label htmlFor="username">Username</label>
-          <input type="text" id="username"  {...register('username')} />
+          <input type="text" id="username"  {...register('username', {
+            required: {
+                value: true,
+                message: 'Username is Required ..'
+            }
+          })} />
   
           <label htmlFor="email">E-mail</label>
-          <input type="email" id="email" {...register('email')} />
+          <input type="email" id="email" {...register('email', {
+            pattern: {
+                value: /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9]+(?:\.[a-zA-Z0-9-]+)*$/,
+                message: 'Invalid Email format'
+            }
+          })} />
   
           <label htmlFor="channel">Channel</label>
           <input type="text" id="channel" {...register('channel')} />
